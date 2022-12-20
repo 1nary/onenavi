@@ -1,0 +1,39 @@
+{% extends "app/base_signin.html" %}
+
+{% load widget_tweaks %} 
+
+{% block content %}
+
+<div class="my-12 w-[350px] mx-auto grid place-items-center">
+  <h1 class="text-3xl text-center mb-5 tracking-widest" style="font-family: Montserrat;">SIGN UP</h1>
+  <div class="mb-8 text-red-600 text-sm"></div>
+  <div class="w-full">
+    <form method="post">
+      {% csrf_token %}
+      <div class="mb-4">
+        <label for="id_nickname" class="text-xs mb-2">ユーザー名<span class="text-red-600 text-sm">*</span></label>
+        {% render_field form.nickname class="block py-1 px-2 h-9 bg-white text-sm w-full border-b focus:outline-none focus:border-emerald-700" placeholder="" autocomplete="off" %}
+      </div>
+      <div class="mb-4">
+        <label for="id_email" class="text-xs mb-2">メールアドレス<span class="text-red-600 text-sm">*</span></label>
+        {% render_field form.email class="block py-1 px-2 h-9 bg-white text-sm w-full border-b focus:outline-none focus:border-emerald-700" placeholder="" autocomplete="off" %}
+      </div>
+      <div class="mb-4">
+        <label for="id_password1" class="text-xs mb-2">パスワード<span class="text-red-600 text-sm">*</span></label>
+        {% render_field form.password1 class="block py-1 px-2 h-9 bg-white text-sm w-full border-b focus:outline-none focus:border-emerald-700" placeholder="" autocomplete="off" %}
+      </div>
+      <div class="mb-12">
+        <label for="id_password2" class="text-xs mb-2">パスワード(確認用)<span class="text-red-600 text-sm">*</span></label>
+        {% render_field form.password2 class="block py-1 px-2 h-9 bg-white text-sm w-full border-b focus:outline-none focus:border-emerald-700" placeholder="" autocomplete="off" %}
+      </div>
+      <div class="grid place-items-center mb-10">
+        <button class="w-2/3 h-12 border border-emerald-700 text-emerald-700 rounded hover:bg-emerald-700 hover:text-white text-sm transition" type="submit">サインアップ</button>
+      </div>
+      <div class="text-center">
+        <p class="text-sm">アカウントをお持ちですか？<a href="{% url 'account_signin' %}" class="text-sm underline">サインインはこちら</a></p>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

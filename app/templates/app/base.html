@@ -1,0 +1,100 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="{% static 'image/onenavi-logo-short.svg' %}"
+      type="image/x-icon"
+    />
+    {% block cancel %}{% endblock  %}
+    <script src="https://unpkg.com/flowbite@1.5.5/dist/flowbite.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>onenavi</title>
+  </head>
+  <body>
+    <header class="">
+      <div class="max-w-[1240px] mx-auto py-8 flex items-center relative">
+        <div class="flex">
+          <a href="" class="hover:opacity-80">
+            <div>
+              <img
+                src="{% static 'image/onenavi-logo-short.svg' %}"
+                alt="onenavi"
+              />
+            </div>
+          </a>
+          <div class="ml-24">
+            <ul class="flex gap-x-10 text-sm leading-[23px]">
+              <li class="hover:text-emerald-700 transition"><a href="{% url 'sale_top' %}">特売商品</a></li>
+              <li class="hover:text-emerald-700 transition"><a href="{% url 'menu_top' %}">献立</a></li>
+              <li class="hover:text-emerald-700 transition"><a href="{% url 'balance_top' %}">家計簿</a></li>
+              <li class="hover:text-emerald-700 transition"><a href="{% url 'clinic_top' %}">周辺の病院</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="ml-auto">
+          <button
+            id="avatarButton"
+            data-dropdown-toggle="userDropdown"
+            data-dropdown-placement="bottom-start"
+            class="flex text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 relative"
+            type="button"
+          >
+            <img
+              class="w-10 h-10 rounded-full"
+              src="{% static 'image/hero-icon.svg' %}"
+              alt="user photo"
+            />
+
+            <span class="top-0 left-7 absolute w-3.5 h-3.5 bg-emerald-700 border-2 border-white dark:border-gray-800 rounded-full"></span>
+          </button>
+        </div>
+
+        <div
+          id="userDropdown"
+          class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow"
+        >
+          <div class="py-3 px-4 text-sm ">
+            <p class="text-sm font-medium truncate text-gray-800">{{ user_data.nickname }}</p>
+            <p class="text-sm truncate text-gray-400">{{ user_data.email }}</p>
+          </div>
+          <ul
+            class="py-1 text-sm text-gray-800"
+            aria-labelledby="dropdownUserAvatarButton"
+          >
+            <li>
+              <a href="{% url 'account_mypage' %}" class="block py-2 px-4 hover:bg-gray-100"
+                >マイページ</a
+              >
+            </li>
+            <li>
+              <a href="#" class="block py-2 px-4 hover:bg-gray-100"
+                >お気に入り</a
+              >
+            </li>
+          </ul>
+          <div class="py-1">
+            <a
+              href="{% url 'account_logout' %}"
+              class="block py-2 px-4 text-sm text-gray-800 hover:bg-gray-100"
+              >サインアウト</a
+            >
+          </div>
+        </div>
+      </div>
+    </header>
+    <main>
+      <div class="max-w-[1200px] mx-auto text-gray-800">
+        {% block content %} {% endblock %}
+      </div>
+    </main>
+    <footer></footer>
+  </body>
+  <script src="{% static 'js/stylenone.js' %}"></script>
+</html>

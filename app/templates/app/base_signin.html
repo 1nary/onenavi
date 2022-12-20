@@ -1,0 +1,43 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="{% static 'image/onenavi-logo-short.svg' %}"
+      type="image/x-icon"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/flowbite@1.5.5/dist/flowbite.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>onenavi</title>
+  </head>
+  <body>
+    <header class="">
+      <div class="max-w-[1240px] mx-auto py-8 flex items-center relative">
+        <div class="flex">
+          <a href="" class="hover:opacity-80">
+            <div>
+              <img
+                src="{% static 'image/onenavi-logo-long.svg' %}"
+                alt="onenavi"
+              />
+            </div>
+          </a>
+        </div>
+      </div>
+    </header>
+    <main>
+      <div class="max-w-[1200px] mx-auto text-gray-800">
+        {% block content %} {% endblock %}
+      </div>
+    </main>
+    <footer></footer>
+  </body>
+</html>
