@@ -1,4 +1,7 @@
 from django.db import models
+from django.utils import timezone
+from accounts.models import CustomUser
+
 
 class SaleItem(models.Model):
   id = models.IntegerField(('商品ID'), primary_key=True)
@@ -14,3 +17,15 @@ class SaleItem(models.Model):
   class Meta:
     verbose_name = ('item')
     verbose_name_plural = ('items')
+
+class SaleFavorite(models.Model):
+  saleitem = models.ForeignKey(SaleItem, on_delete=models.CASCADE)
+  user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+  timestamp = models.DateTimeField(default=timezone.now)
+
+  def __str__(self) -> str:
+    return str(self.saleitem)
+
+  class Meta:
+    verbose_name = ('favorite')
+    verbose_name_plural = ('favorites')
