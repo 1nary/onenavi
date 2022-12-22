@@ -14,10 +14,11 @@
     {% block cancel %}{% endblock  %}
     <script src="https://unpkg.com/flowbite@1.5.5/dist/flowbite.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>onenavi</title>
   </head>
   <body>
-    <header class="">
+    <header>
       <div class="max-w-[1240px] mx-auto py-8 flex items-center relative">
         <div class="flex">
           <a href="" class="hover:opacity-80">
@@ -95,6 +96,7 @@
       </div>
     </main>
     <footer></footer>
+    {% block extrajs %}
+    {% endblock %}
   </body>
-  <script src="{% static 'js/stylenone.js' %}"></script>
 </html>

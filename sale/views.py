@@ -3,9 +3,8 @@ from accounts.models import CustomUser
 from .models import SaleItem, SaleFavorite
 from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Q
-from functools import reduce
-from operator import and_
+from django.shortcuts import get_object_or_404, render
+from django.http import JsonResponse
 
 class SaleView(LoginRequiredMixin,View):
   def get(self, request, *args, **kwargs):
@@ -22,6 +21,19 @@ class SaleView(LoginRequiredMixin,View):
       'favorite_list': favorite_list,
     }
     return render(request, 'sale/sale.html', params)
+
+def SaleFavoriteView(request):
+  user = request.user
+  if request.method == 'POST':
+    item_id = request.POST.get('item_id')
+    item_data = SaleItem.objects.get(id=item_id)
+    item_data_favorite = SaleFavorite.objects.filter(saleitem=item_data)
+
+    if item_data_favorite:
+      item_data_favorite.delete()
+    else:
+      item_data_favorite.create(saleitem=item_data, user=user)
+  return redirect('sale_top')
 
 class SaleSearchView(LoginRequiredMixin,View):
     def get(self, request, *args, **kwargs):
