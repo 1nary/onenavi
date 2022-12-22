@@ -28,12 +28,20 @@ def SaleFavoriteView(request):
     item_id = request.POST.get('item_id')
     item_data = SaleItem.objects.get(id=item_id)
     item_data_favorite = SaleFavorite.objects.filter(saleitem=item_data)
+    favorited = False
 
     if item_data_favorite:
       item_data_favorite.delete()
     else:
       item_data_favorite.create(saleitem=item_data, user=user)
-  return redirect('sale_top')
+      favorited = True
+    params = {
+      'item_id': item_data.id,
+      'favorited': favorited,
+    }
+
+  if request.is_ajax():
+        return JsonResponse(params)
 
 class SaleSearchView(LoginRequiredMixin,View):
     def get(self, request, *args, **kwargs):
