@@ -8,6 +8,7 @@ from urllib import request
 from django.contrib.auth import login,logout
 from accounts.forms import SignupUserForm
 from sale.models import SaleItem, SaleFavorite
+from sale.models import SaleItem, SaleFavorite
 
 class LoginView(views.LoginView):
   template_name = 'accounts/signin.html'
@@ -35,7 +36,6 @@ class FavoriteView(LoginRequiredMixin,View):
       'favorite_list': favorite_list
     }
     return render(request, 'accounts/favorite.html', params)
-
 
 class SignupView(views.SignupView):
   template_name = 'accounts/signup.html'

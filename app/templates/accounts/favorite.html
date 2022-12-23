@@ -1,15 +1,13 @@
 {% extends "app/base.html" %}
 
+{% block fontawesome %}
+<script src="https://kit.fontawesome.com/75f3d7c9c9.js" crossorigin="anonymous"></script>
+{% endblock  %}
+
 {% block content %}
 
 <div class="mb-10">
   <p class="text-xl">お気に入り</p>
-  {% comment %} {% for data in favorite_list %}
-    {% if forloop.counter <= 4 %}
-      <img src="{{data.url}}" alt="">
-      <p>{{data.name}}</p>
-    {% endif %}
-  {% endfor %} {% endcomment %}
 </div>
 <div>
   <div>
@@ -29,7 +27,7 @@
               <div>
                 <form action="{% url 'sale_favorite' %}" method="post">
                   {% csrf_token %}
-                  {% if item_data.id in favorite_list %}
+                  {% if favorite_list %}
                   <button class="absolute right-3 top-2" type="button" id="ajax_sale_favorite" name="{{ item_data.id }}">
                     <i class="fa-solid fa-heart text-red-600 text-lg"></i>
                   </button>
@@ -65,5 +63,31 @@
     <p class="pl-3 relative text-xl border-b pb-4 mb-4 before:absolute before:w-1 before:h-7 before:left-0 before:top-0 before:bg-emerald-700">病院一覧</p>
   </div>
 </div>
+{% endblock %}
 
+{% block extrajs %}
+<script type="text/javascript">
+  $(document).ready(function(event){
+      $(document).on('click', '#ajax_sale_favorite', function(event){
+          event.preventDefault();
+          $.ajax({
+              type: 'POST',
+              url: "{% url 'sale_favorite' %}",
+              data: {
+                  'item_id': $(this).attr('name'),
+                  'csrfmiddlewaretoken': '{{ csrf_token }}'},
+              dataType: 'json',
+              success: function(response){
+                  selector = document.getElementsByName(response.item_id);
+                  if(response.favorited){
+                      $(selector).html("<i class='fa-solid fa-heart text-red-600 text-lg'></i>");
+                  }
+                  else {
+                      $(selector).html("<i class='fa-regular fa-heart text-lg'></i>");
+                  }
+              }
+          });
+      });
+  });
+</script>
 {% endblock %}
