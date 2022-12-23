@@ -34,8 +34,8 @@
             <ul class="flex gap-x-10 text-sm leading-[23px]">
               <li class="hover:text-emerald-700 transition"><a href="{% url 'sale_top' %}">特売商品</a></li>
               <li class="hover:text-emerald-700 transition"><a href="{% url 'menu_top' %}">献立</a></li>
-              <li class="hover:text-emerald-700 transition"><a href="{% url 'balance_top' %}">家計簿</a></li>
-              <li class="hover:text-emerald-700 transition"><a href="{% url 'clinic_top' %}">周辺の病院</a></li>
+              <li class="hover:text-emerald-700 transition"><a href="{% url 'balance_top' %}">支払い管理</a></li>
+              <li class="hover:text-emerald-700 transition"><a href="{% url 'clinic_top' %}">病院一覧</a></li>
             </ul>
           </div>
         </div>
@@ -76,7 +76,7 @@
               >
             </li>
             <li>
-              <a href="#" class="block py-2 px-4 hover:bg-gray-100"
+              <a href="{% url 'account_favorite' %}" class="block py-2 px-4 hover:bg-gray-100"
                 >お気に入り</a
               >
             </li>

@@ -11,14 +11,20 @@ class SaleView(LoginRequiredMixin,View):
     user_data = CustomUser.objects.get(id=request.user.id)
     item_data = SaleItem.objects.all()
     favorite_list = []
+    shop = []
     for data in item_data:
       favorite = data.salefavorite_set.filter(user=request.user)
       if favorite.exists():
         favorite_list.append(data.id)
+
+    if user_data.address == '沖縄県':
+      shop = ['サンエー','イオン','りうぼう']
+    
     params = {
       'user_data': user_data,
       'item_data': item_data,
       'favorite_list': favorite_list,
+      'shop': shop
     }
     return render(request, 'sale/sale.html', params)
 

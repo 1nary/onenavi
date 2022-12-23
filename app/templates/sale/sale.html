@@ -68,7 +68,7 @@
   </div>
   {% endif %}
 </div>
-<div class="h-16 w-full bg-gray-50 mb-5 rounded-md p-3 flex gap-x-3">
+<div class="w-full bg-gray-50 mb-3 rounded-md p-3 flex gap-x-3">
   <form action="{% url 'sale_search' %}" method="get">
     {% csrf_token %}
     <div class="relative">
@@ -111,24 +111,38 @@
       class="block h-full w-36 px-5 border border-emerald-700 text-emerald-700 bg-white shadow hover:bg-emerald-700 text-sm transition hover:text-white rounded-md focus:outline-none text-center appearance-none cursor-pointer"
     >
       <option value="" hidden selected>店舗を選ぶ</option>
-      <option value="">テスト１</option>
-      <option value="">テスト２</option>
-      <option value="">テスト３</option>
-      <option value="">テスト４</option>
+      {% for s in shop %}
+      <option value="{{s}}">{{s}}</option>
+      {% endfor %}
     </select>
   </div>
 </div>
+<p class="text-right text-sm mb-1">価格表記は、全て、税込み価格表示です。</p>
 <div class="grid grid-cols-4 gap-y-7 gap-x-4 mb-7">
   {% for item_data in item_data %}
   <div>
     <div
-      class="h-[275px] mb-3.5 bg-gray-50 rounded-md grid place-items-center shadow-sm"
+      class="relative h-[275px] mb-3.5 bg-gray-50 rounded-md flex justify-center place-items-center shadow-sm"
     >
       <img
         class="h-auto w-40 mix-blend-multiply"
         src={{ item_data.url }}
         alt=""
       />
+      <div>
+        <form action="{% url 'sale_favorite' %}" method="post">
+          {% csrf_token %}
+          {% if item_data.id in favorite_list %}
+          <button class="absolute right-3 top-2" type="button" id="ajax_sale_favorite" name="{{ item_data.id }}">
+            <i class="fa-solid fa-heart text-red-600 text-lg"></i>
+          </button>
+          {% else %}
+          <button class="absolute right-3 top-2" type="button" id="ajax_sale_favorite" name="{{ item_data.id }}">
+            <i class="fa-regular fa-heart text-lg"></i>
+          </button>
+          {% endif %}
+        </form>
+      </div>
     </div>
     <div class="mb-1">
       <p class="text-xs text-gray-500">{{ item_data.shop }}</p>
@@ -143,18 +157,6 @@
         <p class="text-xl">¥{{ item_data.price }}</p>
       </div>
       <div class="ml-auto">
-        <form action="{% url 'sale_favorite' %}" method="post">
-          {% csrf_token %}
-          {% if item_data.id in favorite_list %}
-          <button type="button" id="ajax_sale_favorite" name="{{ item_data.id }}">
-            <i class="fa-solid fa-heart text-red-600 text-lg"></i>
-          </button>
-          {% else %}
-          <button type="button" id="ajax_sale_favorite" name="{{ item_data.id }}">
-            <i class="fa-regular fa-heart text-red-600 text-lg"></i>
-          </button>
-          {% endif %}
-        </form>
       </div>
     </div>
   </div>
@@ -181,7 +183,7 @@
                       $(selector).html("<i class='fa-solid fa-heart text-red-600 text-lg'></i>");
                   }
                   else {
-                      $(selector).html("<i class='fa-regular fa-heart text-red-600 text-lg'></i>");
+                      $(selector).html("<i class='fa-regular fa-heart text-lg'></i>");
                   }
               }
           });

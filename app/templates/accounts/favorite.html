@@ -1,0 +1,69 @@
+{% extends "app/base.html" %}
+
+{% block content %}
+
+<div class="mb-10">
+  <p class="text-xl">お気に入り</p>
+  {% comment %} {% for data in favorite_list %}
+    {% if forloop.counter <= 4 %}
+      <img src="{{data.url}}" alt="">
+      <p>{{data.name}}</p>
+    {% endif %}
+  {% endfor %} {% endcomment %}
+</div>
+<div>
+  <div>
+    <p class="pl-3 relative text-xl border-b pb-4 mb-4 before:absolute before:w-1 before:h-7 before:left-0 before:top-0 before:bg-emerald-700">特売商品</p>
+    <div class="grid grid-cols-4 gap-y-7 gap-x-4 mb-8">
+      {% for item_data in favorite_list %}
+        {% if forloop.counter <= 4 %}
+          <div>
+            <div
+              class="relative h-[275px] mb-3.5 bg-gray-50 rounded-md flex justify-center place-items-center shadow-sm"
+            >
+              <img
+                class="h-auto w-40 mix-blend-multiply"
+                src={{ item_data.url }}
+                alt=""
+              />
+              <div>
+                <form action="{% url 'sale_favorite' %}" method="post">
+                  {% csrf_token %}
+                  {% if item_data.id in favorite_list %}
+                  <button class="absolute right-3 top-2" type="button" id="ajax_sale_favorite" name="{{ item_data.id }}">
+                    <i class="fa-solid fa-heart text-red-600 text-lg"></i>
+                  </button>
+                  {% else %}
+                  <button class="absolute right-3 top-2" type="button" id="ajax_sale_favorite" name="{{ item_data.id }}">
+                    <i class="fa-regular fa-heart text-lg"></i>
+                  </button>
+                  {% endif %}
+                </form>
+              </div>
+            </div>
+            <div class="mb-1">
+              <p class="text-xs text-gray-500">{{ item_data.shop }}</p>
+            </div>
+            <div class="mb-2">
+              <p class="w-[275px] text-sm leading-5 overflow-hidden h-10">
+                {{ item_data.name }}
+              </p>
+            </div>
+            <div class="flex items-center">
+              <div>
+                <p class="text-xl">¥{{ item_data.price }}</p>
+              </div>
+              <div class="ml-auto">
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+  <div>
+    <p class="pl-3 relative text-xl border-b pb-4 mb-4 before:absolute before:w-1 before:h-7 before:left-0 before:top-0 before:bg-emerald-700">病院一覧</p>
+  </div>
+</div>
+
+{% endblock %}
