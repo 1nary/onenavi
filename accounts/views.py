@@ -8,7 +8,6 @@ from urllib import request
 from django.contrib.auth import login,logout
 from accounts.forms import SignupUserForm
 from sale.models import SaleItem, SaleFavorite
-from sale.models import SaleItem, SaleFavorite
 
 class LoginView(views.LoginView):
   template_name = 'accounts/signin.html'
@@ -42,5 +41,5 @@ class SignupView(views.SignupView):
   form_class = SignupUserForm
 
 def LogoutView(request):
-    logout(request) 
-    return redirect(to='/accounts/signin/')
+    logout(request)
+    return redirect('account_signin')

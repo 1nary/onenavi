@@ -120,6 +120,7 @@
 <p class="text-right text-sm mb-1">価格表記は、全て、税込み価格表示です。</p>
 <div class="grid grid-cols-4 gap-y-7 gap-x-4 mb-7">
   {% for item_data in item_data %}
+  {% if item_data.date == today %}
   <div>
     <div
       class="relative h-[275px] mb-3.5 bg-gray-50 rounded-md flex justify-center place-items-center shadow-sm"
@@ -160,6 +161,7 @@
       </div>
     </div>
   </div>
+  {% endif %}
   {% endfor %}
 </div>
 

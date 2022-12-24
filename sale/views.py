@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, render
 from django.http import JsonResponse
+from datetime import date
 
 class SaleView(LoginRequiredMixin,View):
   def get(self, request, *args, **kwargs):
@@ -19,12 +20,15 @@ class SaleView(LoginRequiredMixin,View):
 
     if user_data.address == '沖縄県':
       shop = ['サンエー','イオン','りうぼう']
-    
+
+    today = date.today()
+
     params = {
       'user_data': user_data,
       'item_data': item_data,
       'favorite_list': favorite_list,
-      'shop': shop
+      'shop': shop,
+      'today': today,
     }
     return render(request, 'sale/sale.html', params)
 
