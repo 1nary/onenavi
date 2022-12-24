@@ -1,5 +1,8 @@
 from django.contrib import admin
 from .models import SaleItem, SaleFavorite
 
-admin.site.register(SaleItem)
+class SaleItemAdmin(admin.ModelAdmin):
+    list_display=('id','name','price','date','shop')
+
+admin.site.register(SaleItem,SaleItemAdmin)
 admin.site.register(SaleFavorite)
