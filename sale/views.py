@@ -10,7 +10,11 @@ from datetime import date
 class SaleView(LoginRequiredMixin,View):
   def get(self, request, *args, **kwargs):
     user_data = CustomUser.objects.get(id=request.user.id)
-    item_data = SaleItem.objects.all()
+    today = date.today()
+    message = ''
+    item_data = SaleItem.objects.filter(date__contains=today)
+    if not item_data:
+      message = '本日の特売商品はありません。'
     favorite_list = []
     shop = []
     for data in item_data:
@@ -21,14 +25,13 @@ class SaleView(LoginRequiredMixin,View):
     if user_data.address == '沖縄県':
       shop = ['サンエー','イオン','りうぼう']
 
-    today = date.today()
 
     params = {
       'user_data': user_data,
       'item_data': item_data,
       'favorite_list': favorite_list,
       'shop': shop,
-      'today': today,
+      'message': message
     }
     return render(request, 'sale/sale.html', params)
 
@@ -57,7 +60,11 @@ class SaleSearchView(LoginRequiredMixin,View):
     def get(self, request, *args, **kwargs):
         user_data = CustomUser.objects.get(id=request.user.id)
         keyword = request.GET.get('keyword')
-        item_data = SaleItem.objects.filter(name__contains=keyword)
+        today = date.today()
+        message = ''
+        item_data = SaleItem.objects.filter(name__contains=keyword,date__contains=today)
+        if not item_data:
+          message = '該当する検索結果はありません。'
         favorite_list = []
         for data in item_data:
           favorite = data.salefavorite_set.filter(user=request.user)
@@ -69,6 +76,7 @@ class SaleSearchView(LoginRequiredMixin,View):
           'item_data': item_data,
           'keyword': keyword,
           'favorite_list': favorite_list,
+          'message': message
         }
         return render(request, 'sale/sale.html', params)
 
