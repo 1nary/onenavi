@@ -68,7 +68,7 @@
   </div>
   {% endif %}
 </div>
-<div class="w-full bg-gray-50 mb-3 rounded-md p-3 flex gap-x-3">
+<div class="w-full bg-gray-50 mb-10 rounded-md p-3 flex gap-x-3">
   <form action="{% url 'sale_search' %}" method="get">
     {% csrf_token %}
     <div class="relative">
@@ -163,7 +163,7 @@
   {% endfor %}
 </div>
 {% else %}
-<div class="mt-24">
+<div class="mt-20">
   <p class="text-center">{{ message }}</p>
 </div>
 

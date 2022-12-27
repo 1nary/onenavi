@@ -8,7 +8,7 @@ class SaleItem(models.Model):
   name = models.CharField(('商品名'), max_length=255)
   price = models.FloatField(('税込価格'), max_length=255)
   url = models.CharField(('url'), max_length=255)
-  date = models.DateField(('取得日'))
+  date = models.DateField(('取得日'),auto_now_add=True)
   shop = models.CharField(('店舗名'), max_length=255)
 
   def __str__(self) -> str:
